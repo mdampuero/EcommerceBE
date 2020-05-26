@@ -1,0 +1,18 @@
+api_users:
+    resource: "@InamikaApiBundle/Resources/config/users.yml"
+
+api_settings:
+    resource: "@InamikaApiBundle/Resources/config/settings.yml"
+
+api_products:
+    resource: "@InamikaApiBundle/Resources/config/products.yml"
+
+api_orders:
+    resource: "@InamikaApiBundle/Resources/config/orders.yml"
+
+api_customers:
+    resource: "@InamikaApiBundle/Resources/config/customers.yml"
+
+api_login:
+    resource: "@InamikaApiBundle/Resources/config/login.yml"
+

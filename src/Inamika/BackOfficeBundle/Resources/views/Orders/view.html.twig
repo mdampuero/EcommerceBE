@@ -1,0 +1,104 @@
+{% set pathBase='inamika_backoffice_orders' %}
+{% set pathBaseApi='api_orders' %}
+{% extends "InamikaBackOfficeBundle::layout.html.twig" %}
+{% block body %}
+	{{ parent()}}
+	<h3 class="card-title">
+		Pedido: #{{ data.id }}
+		<hr>
+	</h3>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="card bg-light">
+				<h4 class="card-header bg-info text-white">Cliente</h4>
+				<div class="card-body">
+					<h5 class="card-title">{{ data.customerId.name }}</h5>
+					<p class="card-text">
+						CUIT/CUIL:
+						{{ data.customerId.document }}<br/>
+						Email:
+						<a href="mailto:{{ data.customerId.email }}">{{ data.customerId.email }}</a><br/>
+						Teléfono:
+						{{ data.customerId.phone }}<br/>
+						Dirección:
+						{{ data.customerId.address }}<br/>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card bg-light">
+				<h4 class="card-header bg-success text-white">Pedido</h4>
+				<div class="card-body">
+					<h5 class="card-title">
+						Total: ${{ data.total | number_format(2, ',', '.') }}</h5>
+					<p class="card-text">
+						Fecha:
+						{{ data.createdAt | date('d/m/Y H:i') }}<br/>
+						Total de items:
+						{{ data.items | length }}<br/>
+						<br/>
+						<br/>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card bg-light">
+				<h4 class="card-header bg-primary text-white">Canal de venta</h4>
+				<div class="card-body" style="min-height:166px;">
+					<h5 class="card-title">{{ data.channel | upper }}</h5>
+					<p class="card-text">
+						Observaciones:
+						{{ data.observations | nl2br }}
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="table-responsive m-t-40" style="clear: both;">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th class="text-center">#</th>
+							<th>Código</th>
+							<th>Nombre</th>
+							<th class="text-right">Cantidad</th>
+							<th class="text-right">P/U</th>
+							<th class="text-right">Subtotal</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in data.items %}
+							<tr>
+								<td class="text-center">{{ (loop.index + 1) }}</td>
+								<td>{{ item.code }}</td>
+								<td>{{ item.description }}</td>
+								<td class="text-right">{{ item.amount }}</td>
+								<td class="text-right">$
+									{{ item.price | number_format(2, ',', '.')}}</td>
+								<td class="text-right">$
+									{{ item.subtotal | number_format(2, ',', '.')}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="pull-right m-t-30 text-right">
+				<h3>
+					<b>Total :</b>$ 
+					{{ data.total | number_format(2, ',', '.')}}</h3>
+			</div>
+			<div class="clearfix"></div>
+			{# <hr>
+			<div class="text-right">
+				<button class="btn btn-danger" type="button" onclick="print()">
+					<span>
+						<i class="fa fa-print"></i> Imprimir</span>
+				</button>
+			</div> #}
+		</div>
+	</div>
+{% endblock body %}
